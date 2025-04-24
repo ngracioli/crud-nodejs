@@ -23,6 +23,18 @@ app.get("/usuarios", async (req, res) => {
     res.json(usuarios);
 });
 
+app.post("/usuarios", async (req, res) => {
+    try {
+        const usuario = await Usuario.create(req.body);
+        res.status(201).json(usuario);
+    } catch (err) {
+        res.status(500).json({
+            erro: "Erro ao criar usuário",
+            detalhes: err.message,
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
