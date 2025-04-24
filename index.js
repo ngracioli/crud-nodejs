@@ -69,6 +69,21 @@ app.put("/usuarios/:id", async (req, res) => {
     }
 });
 
+app.delete("/usuarios/:id", async (req, res) => {
+    try {
+        const usuario = await Usuario.findByIdAndDelete(req.params.id);
+        if (!usuario) {
+            return res.status(404).json({ erro: "Usuário não encontrado" });
+        }
+        res.json({ mensagem: "Usuário deletado com sucesso" });
+    } catch (err) {
+        res.status(500).json({
+            erro: "Erro ao deletar usuário",
+            detalhes: err.message,
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
