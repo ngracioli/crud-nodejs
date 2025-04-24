@@ -35,6 +35,21 @@ app.post("/usuarios", async (req, res) => {
     }
 });
 
+app.get("/usuarios/:id", async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.params.id);
+        if (!usuario) {
+            return res.status(404).json({ erro: "Usuário não encontrado" });
+        }
+        res.json(usuario);
+    } catch (err) {
+        res.status(500).json({
+            erro: "Erro ao buscar usuário",
+            detalhes: err.message,
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
