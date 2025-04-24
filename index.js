@@ -16,6 +16,13 @@ app.get("/", (req, res) => {
     res.send("API funcionando");
 });
 
+const Usuario = require("./models/Usuario");
+
+app.get("/usuarios", async (req, res) => {
+    const usuarios = await Usuario.find();
+    res.json(usuarios);
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
